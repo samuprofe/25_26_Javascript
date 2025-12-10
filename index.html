@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    #contenedor_mensajes {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+    .mensajes_api {
+        border-bottom: 1px solid #eee;
+        padding: 10px 0;
+    }
+    .mensajes_api:last-child {
+        border-bottom: none;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        
+    }
+    input, textarea {
+        margin-bottom: 10px;
+        padding: 8px;
+        font-size: 16px;
+        
+    }
+    button {
+        padding: 10px;
+        font-size: 16px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #218838;
+    }
+    
+</style>
+<body>
+
+
+    <h1>Mi primer proyecto en VS Code</h1>
+    <p>Vamos a intentar conectarnos a una API REST</p>
+    <div id="contenedor_mensajes">
+        <!-- Los mensajes de la API se mostrarán aquí -->   
+         <div class="mensajes_api">
+                <h3>Título del mensaje 1</h3>
+                <p>Contenido del mensaje 1</p>
+                <button>Eliminar</button>
+         </div>
+         <div class="mensajes_api">
+                <h3>Título del mensaje 2</h3>
+                <p>Contenido del mensaje 2</p>
+                <button>Eliminar</button>
+         </div>
+         <div class="mensajes_api">
+                <h3>Título del mensaje 3</h3>
+                <p>Contenido del mensaje 3</p>
+                <button>Eliminar</button>
+         </div>
+    </div>
+    <form id="formulario_mensaje">
+        <input type="text" id="titulo" placeholder="Título del mensaje" required>
+        <br>
+        <textarea id="texto" placeholder="Contenido del mensaje" required></textarea>
+        <br>
+        <button type="submit">Enviar mensaje</button>
+    </form>
+
+    <script>
+        console.log("Hola desde index.html");
+        console.log("Hola desde index.html");
+        console.log("Hola desde index.html");
+        
+        // const para constantes (inmutables)
+        const num1=5;
+        const num2=10;
+        const nombre="Juan Perez";
+        let edad="30";
+
+        if(edad===30) // comparación estricta (debe tener el mismo tipo de dato para que la condición sea verdadera)
+        {
+            console.log("Eres mayor de edad");
+        }
+
+        if(edad==30) // comparación débil (no tiene en cuenta los tipos de datos)
+        {
+            console.log("Eres mayor de edad");
+        }
+
+        // let para variables
+        let suma = num1 + num2;
+        console.log("La suma es: ", suma);
+        
+        //debugger; // punto de interrupción
+
+        // Objetos
+        const persona = {
+            nombre: "Ana Gomez",
+            edad: 25,
+            ciudad: "Madrid"
+        };
+        const persona2 = {
+            nombre: "Ana Gomez",
+            edad: 25,
+            ciudad: "Madrid",
+            pais: "España"
+        };
+
+        //Fallaría porque persona es una constante y no se puede reasignar (cambiar la dirección de memoria a la que apunta)
+        //persona = persona2; // asignación por referencia
+
+        //Creo una nueva variable con let que apunte al mismo objeto que persona2
+        const persona3 = persona2; // asignación por referencia
+
+        console.log("Persona 3: ", persona3);
+        persona2.pais = "Portugal"; // modificar propiedad de un objeto
+        console.log("Persona 3 después de modificar persona2: ", persona3); //persona3 también se ve afectada porque apunta al mismo objeto que persona2
+
+
+        //Podemos modificar las propiedades de un objeto aunque sea un const porque no modificamos la referencia (la dirección de memoria) sino el valor de una propiedad
+        persona.ciudad = "Barcelona"; // modificar propiedad de un objeto
+        console.log("Persona: ", persona);
+
+
+        console.log("Nombre: ", persona.nombre);
+        console.log("Edad: ", persona.edad);
+        console.log("Ciudad: ", persona.ciudad);
+
+        //Arrays
+
+        let frutas = ["Manzana", "Plátano", "Naranja"];
+        console.log("Frutas: ", frutas);
+        console.log("Primera fruta: ", frutas[0]);
+        console.log("Segunda fruta: ", frutas[1]);
+        console.log("Tercera fruta: ", frutas[2]);
+
+        frutas.push("Mango"); // añadir elemento al final del array
+        console.log("Frutas después de añadir Mango: ", frutas);
+        frutas[1] = "Kiwi"; // modificar elemento del array
+        console.log("Frutas después de modificar Plátano por Kiwi: ", frutas);
+
+        //Recorrer un array
+        console.log("Recorriendo el array de frutas:");
+        for(let i=0; i<frutas.length; i++)
+        {
+            console.log("Fruta ", i, ": ", frutas[i]);
+        }
+
+        //Otra forma de recorrer un array
+        for (const fruta of frutas) {
+            console.log(fruta);
+        }
+
+        //Otra forma de recorrer un array
+        frutas.forEach((fruta,indice) => {
+            console.log("Fruta ", fruta, " en el índice ", indice);
+        });
+
+        // Funciones
+        function sumar(a, b) {
+            return a + b;
+        }
+        let resultado = sumar(3, 7);
+        console.log("El resultado de la suma es: ", resultado);
+
+
+        //Funciones flecha
+        const restar = (a, b) =>{
+            return a - b;
+        }
+        let resultadoResta = restar(10, 4);
+        console.log("El resultado de la resta es: ", resultadoResta);
+
+
+        //Modificamos el DOM
+        const contenedorMensajes = document.getElementById("contenedor_mensajes");
+        //const contenedorMensajes = document.querySelector("#contenedor_mensajes");
+        console.log("Contenedor de mensajes: ", contenedorMensajes);
+        //contenedorMensajes.style.backgroundColor = "#f9f9f9";
+        //contenedorMensajes.textContent = "cargando...";
+        //contenedorMensajes.remove();
+
+        //Eventos
+        const botonesEliminar = document.querySelectorAll(".mensajes_api button");
+        botonesEliminar.forEach((boton) => {
+            
+            boton.addEventListener("click", (event) => {
+                event.target.parentElement.remove();
+            });
+
+        }); 
+
+    </script>
+
+
+    
+</body>
+</html>
