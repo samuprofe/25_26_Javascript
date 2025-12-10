@@ -47,8 +47,6 @@
     
 </style>
 <body>
-
-
     <h1>Mi primer proyecto en VS Code</h1>
     <p>Vamos a intentar conectarnos a una API REST</p>
     <div id="contenedor_mensajes">
@@ -56,17 +54,17 @@
          <div class="mensajes_api">
                 <h3>Título del mensaje 1</h3>
                 <p>Contenido del mensaje 1</p>
-                <button>Eliminar</button>
+                <button class="btn-eliminar">Eliminar</button>
          </div>
          <div class="mensajes_api">
                 <h3>Título del mensaje 2</h3>
                 <p>Contenido del mensaje 2</p>
-                <button>Eliminar</button>
+                <button class="btn-eliminar">Eliminar</button>
          </div>
          <div class="mensajes_api">
                 <h3>Título del mensaje 3</h3>
                 <p>Contenido del mensaje 3</p>
-                <button>Eliminar</button>
+                <button class="btn-eliminar">Eliminar</button>
          </div>
     </div>
     <form id="formulario_mensaje">
@@ -76,12 +74,15 @@
         <br>
         <button type="submit">Enviar mensaje</button>
     </form>
+    
+    <br>
+    <button id="btn_borrar_todo">Borrar todos los mensajes</button>
+    <button id="btn_add_mensajes_ejemplo">Añadir 3 mensajes de ejemplo"</button>
+    <!--Añadir 3 mensajes de ejemplo del tipo "Titulo 33", "Texto 33" siendo el 33 un número aleatorio entre 0 y 1000 -->
 
     <script>
         console.log("Hola desde index.html");
-        console.log("Hola desde index.html");
-        console.log("Hola desde index.html");
-        
+         
         // const para constantes (inmutables)
         const num1=5;
         const num2=10;
@@ -89,6 +90,12 @@
         let edad="30";
 
         if(edad===30) // comparación estricta (debe tener el mismo tipo de dato para que la condición sea verdadera)
+        {
+            
+            console.log("Eres mayor de edad");
+        }
+
+        if(edad==30) // comparación débil (no tiene en cuenta los tipos de datos)
         {
             console.log("Eres mayor de edad");
         }
@@ -132,6 +139,10 @@
         persona.ciudad = "Barcelona"; // modificar propiedad de un objeto
         console.log("Persona: ", persona);
 
+        // El operador spread (...) crea un nuevo objeto con las mismas propiedades y valores que el objeto original 
+        const persona_copia = {...persona}; 
+        console.log("Copia de persona: ", persona_copia);
+
 
         console.log("Nombre: ", persona.nombre);
         console.log("Edad: ", persona.edad);
@@ -147,6 +158,7 @@
 
         frutas.push("Mango"); // añadir elemento al final del array
         console.log("Frutas después de añadir Mango: ", frutas);
+        frutas.push(44); // añadir elemento al final del array. En js los arrays pueden tener elementos de diferentes tipos de datos
         frutas[1] = "Kiwi"; // modificar elemento del array
         console.log("Frutas después de modificar Plátano por Kiwi: ", frutas);
 
@@ -192,7 +204,7 @@
         //contenedorMensajes.remove();
 
         //Eventos
-        const botonesEliminar = document.querySelectorAll(".mensajes_api button");
+        const botonesEliminar = document.querySelectorAll(".btn-eliminar");
         botonesEliminar.forEach((boton) => {
             
             boton.addEventListener("click", (event) => {
@@ -201,6 +213,37 @@
 
         }); 
 
+        //Cada vez que se pulsa una tecla se ejecuta esta función
+        document.addEventListener("keyup", e => {
+            console.log("Pulsaste:", e.key);
+        });
+
+        document.getElementById("formulario_mensaje").addEventListener("submit", function(event){
+            event.preventDefault(); // evitar que se recargue la página al enviar el formulario
+            const titulo = document.getElementById("titulo").value;
+            const texto = document.getElementById("texto").value;
+            
+            const capaMensaje = document.createElement("div");
+            //capaMensaje.innerHTML = '<h3>'+titulo+'</h3><p>'+texto+'</p><button class="btn-eliminar">Eliminar</button>';
+            capaMensaje.innerHTML = `
+                <h3>${titulo}</h3>
+                <p>${texto}</p>
+                <button class="btn-eliminar">
+                    Eliminar
+                </button>`;
+
+            capaMensaje.classList.add("mensajes_api");
+            capaMensaje.querySelector(".btn-eliminar").addEventListener("click", (event) => {
+                event.target.parentElement.remove();
+            });
+
+            const contenedorMensajes = document.getElementById("contenedor_mensajes");
+            contenedorMensajes.appendChild(capaMensaje);
+            
+            //Limpiar el formulario
+            document.getElementById("formulario_mensaje").reset();
+            
+        });
     </script>
 
 

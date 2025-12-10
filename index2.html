@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    #contenedor_mensajes {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+    .mensajes_api {
+        border-bottom: 1px solid #eee;
+        padding: 10px 0;
+    }
+    .mensajes_api:last-child {
+        border-bottom: none;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        
+    }
+    input, textarea {
+        margin-bottom: 10px;
+        padding: 8px;
+        font-size: 16px;
+        
+    }
+    button {
+        padding: 10px;
+        font-size: 16px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #218838;
+    }
+    
+</style>
+<body>
+    <h1>Mi primer proyecto en VS Code</h1>
+    <p>Vamos a intentar conectarnos a una API REST</p>
+    <div id="contenedor_mensajes">
+        <p>Todavía no has insertado ningún mensaje.</p>
+    </div>
+    <form id="formulario_mensaje">
+        <input type="text" id="titulo" placeholder="Título del mensaje" required>
+        <br>
+        <textarea id="texto" placeholder="Contenido del mensaje" required></textarea>
+        <br>
+        <button type="submit">Enviar mensaje</button>
+    </form>
+    
+    <br>
+    <button id="btn_borrar_todo">Borrar todos los mensajes</button>
+    <button id="btn_add_mensajes_ejemplo">Añadir 3 mensajes de ejemplo"</button>
+    <!--Añadir 3 mensajes de ejemplo del tipo "Titulo 33", "Texto 33" siendo el 33 un número aleatorio entre 0 y 1000 -->
+
+    <script>
+        //Array para almacenar los mensajes (simulando una base de datos)
+        let listadoMensajes = [];
+        
+        //FUNCIONALIDAD FORMULARIO NUEVO MENSAJE
+        document.getElementById("formulario_mensaje").addEventListener("submit", function(event){
+            event.preventDefault(); // evitar que se recargue la página al enviar el formulario
+            // Obtener los datos del formulario
+            const titulo = document.getElementById("titulo").value;
+            const texto = document.getElementById("texto").value;
+
+            //Si no hay ningún mensaje, limpiar el contenedor
+            const contenedorMensajes = document.getElementById("contenedor_mensajes");
+            if (contenedorMensajes.innerHTML.includes("Todavía no has insertado ningún mensaje.")) {
+                contenedorMensajes.innerHTML = "";
+            }
+            const capaMensaje = crearMensajeDOM(titulo, texto);
+            
+            //Limpiar el formulario
+            document.getElementById("formulario_mensaje").reset();
+            
+        });
+
+        //FUNCIONALIDAD BOTÓN BORRAR TODOS LOS MENSAJES
+        document.getElementById("btn_borrar_todo").addEventListener("click", () => {
+            document.getElementById("contenedor_mensajes").innerHTML = "Todavía no has insertado ningún mensaje.";
+        });
+
+        //FUNCIONALIDAD BOTÓN AÑADIR 3 MENSAJES DE EJEMPLO
+        document.getElementById("btn_add_mensajes_ejemplo").addEventListener
+        ("click", () => {
+            for (let i = 0; i < 3; i++) {
+                const numeroAleatorio = Math.floor(Math.random() * 1000);
+                const titulo = `Titulo ${numeroAleatorio}`;
+                const texto = `Texto ${numeroAleatorio}`;
+                crearMensajeDOM(titulo, texto);
+            }
+        });
+
+        //Función auxiliar para crear un mensaje en el DOM
+        function crearMensajeDOM(titulo, texto) {
+            // Crear la capa de mensaje
+            const capaMensaje = document.createElement("div");
+            capaMensaje.innerHTML = `
+                <h3>${titulo}</h3>
+                <p>${texto}</p>
+                <button class="btn-eliminar">
+                    Eliminar
+                </button>`;
+
+            capaMensaje.classList.add("mensajes_api");
+            // Añadir funcionalidad al botón eliminar
+            capaMensaje.querySelector(".btn-eliminar").addEventListener("click", (event) => {
+                event.target.parentElement.remove();
+                //Sí no hay ningún mensaje, mostrar el mensaje de que no hay mensajes
+                const contenedorMensajes = document.getElementById("contenedor_mensajes");
+                if (contenedorMensajes.children.length === 0) {
+                    contenedorMensajes.innerHTML = "Todavía no has insertado ningún mensaje.";
+                }
+            });
+
+            // Añadir la capa de mensaje al contenedor
+            document.getElementById("contenedor_mensajes").appendChild(capaMensaje);
+            
+            // Guardo el mensaje en el array (simulando guardar en base de datos)
+            listadoMensajes.push({titulo: titulo, texto: texto});
+
+            return capaMensaje;
+        }
+    </script>
+    
+</body>
+</html>
