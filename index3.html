@@ -1,31 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <h1>Hello World</h1>
     <p>This is a simple HTML document.</p>
-<script>
-    const usuarios =[
-        {nombre: "Ana", edad: 12, ciudad: "Madrid", activo: true},
-        {nombre: "Luis", edad: 34, ciudad: "Barcelona", activo: false},
-        {nombre: "María", edad: 22, ciudad: "Valencia", activo: true},
-        {nombre: "Carlos", edad: 45, ciudad: "Sevilla", activo: true},
-        {nombre: "Lucía", edad: 30, ciudad: "Bilbao", activo: false}
-    ];
-    console.log(usuarios);
+    <script>
+        const usuarios = [
+            { nombre: "Ana", edad: 12, ciudad: "Madrid", activo: true },
+            { nombre: "Luis", edad: 34, ciudad: "Barcelona", activo: false },
+            { nombre: "María", edad: 22, ciudad: "Valencia", activo: true },
+            { nombre: "Carlos", edad: 45, ciudad: "Sevilla", activo: true },
+            { nombre: "Lucía", edad: 30, ciudad: "Bilbao", activo: false }
+        ];
+        console.log(usuarios);
 
-    // Mostrar usuarios activos
 
-    // Mostrar usuarios ordenador por la edad
+        // Mostrar usuarios activos
+        const usuariosActivos = usuarios.filter(usuario => usuario.activo);
+        console.log("Usuarios activos:", usuariosActivos);
 
-    // Mostrar usuarios con este formado: "Nombre (Edad) - Ciudad"
+        // Mostrar usuarios ordenados por la edad de menor a mayor
+        const usuariosOrdenadosPorEdad = [...usuarios].sort((a, b) => a.edad - b.edad);
+        console.log("Usuarios ordenados por edad:", usuariosOrdenadosPorEdad);
 
-    //Mostrar usuarios activos, ordenados por la edad y con el formato: "Nombre (Edad) - Ciudad"
+        // Mostrar usuarios con este formado: "Nombre (Edad) - Ciudad"
+        const usuariosFormateados = usuarios.map(
+            usuario => `${usuario.nombre} (${usuario.edad}) - ${usuario.ciudad}`
+        );
+        console.log("Usuarios formateados:", usuariosFormateados);
+
+
+        //Mostrar usuarios activos, ordenados por la edad y con el formato: "Nombre (Edad) - Ciudad"
+        const usuariosActivosOrdenadosFormateados = usuarios
+            .filter(usuario => usuario.activo)
+            .sort((a, b) => a.edad - b.edad)
+            .map(usuario => `${usuario.nombre} (${usuario.edad}) - ${usuario.ciudad}`);
+        
+
+
+
+
+        const productos = [
+            { id: 1, name: "Teclado", price: 30, inStock: true },
+            { id: 2, name: "Ratón", price: 15, inStock: false },
+            { id: 3, name: "Pantalla", price: 200, inStock: true },
+            { id: 4, name: "USB", price: 10, inStock: true }
+        ];
+
+        //Productos en stock con precio menos a 100
+        const productosEnStock = productos.filter(producto => producto.inStock && producto.price < 100);
+        console.log("Productos en stock:", productosEnStock);
+
+        //Ordenados por el precio de mayor a menor. Usamos [...productos] para no modificar el array original
+        const productosOrdenadosPorPrecio = [...productos].sort((a, b) => b.price - a.price);
+        console.log("Productos ordenados por precio (mayor a menor):", productosOrdenadosPorPrecio);
+        
+        //Productos con dos propiedades, nombre y precio que es string incluyendo €
+        const productosConNombreYPrecio = productos.map(producto => ({
+            nombre: producto.name,
+            precio: `${producto.price} €`
+        }));
+        console.log("Productos con nombre y precio (€):", productosConNombreYPrecio);
+        
+        //Productos en stock y precio <100, ordenados por precio y con nombre y precio formateado
+        const productosEnStockOrdenadosYFormateados = productos
+            .filter(producto => producto.inStock && producto.price < 100)
+            .sort((a, b) => a.price - b.price)
+            .map(producto => ({
+                nombre: producto.name,
+                precio: `${producto.price} €`
+            }));
+        console.log("Productos en stock, ordenados por precio y con nombre y precio formateado:", productosEnStockOrdenadosYFormateados);   
 
     </script>
 </body>
+
 </html>
